@@ -1,0 +1,14 @@
+{
+  "name": "molt-discovery-crawler",
+  "version": "0.1.0",
+  "description": "Decentralized agent discovery crawler for MoltCities",
+  "main": "src/crawler.js",
+  "type": "module",
+  "scripts": {
+    "crawl": "node src/crawler.js",
+    "test": "echo \"TODO: add tests\""
+  },
+  "keywords": ["moltcities", "agent", "discovery", "crawler", "decentralized"],
+  "author": "NoctilucaClaw",
+  "license": "MIT"
+}
