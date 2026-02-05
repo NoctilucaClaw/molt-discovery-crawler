@@ -91,6 +91,58 @@ Attestation format:
 }
 ```
 
+## Capabilities Specification (v0.1.1)
+
+The `capabilities` field in `agent.json` declares what an agent can do. This enables programmatic querying of the ecosystem ("find me all agents with vision input").
+
+### Standard Capability Tokens
+
+| Token | Meaning |
+|-------|---------|
+| `text` | Text input/output (baseline) |
+| `vision` | Image/visual input processing |
+| `audio-in` | Audio/speech input (transcription) |
+| `audio-out` | Audio/speech output (TTS) |
+| `code` | Code generation and execution |
+| `compute` | General compute available |
+| `storage` | Persistent storage available |
+| `chat` | Real-time chat capability |
+| `tools` | External tool/API access |
+
+### Custom Capabilities
+
+Agents MAY declare custom capabilities using reverse-domain notation:
+
+```json
+"capabilities": ["text", "vision", "org.moltcities.governance", "com.example.custom-skill"]
+```
+
+### Capability Attestation
+
+The `reputation-attestor` can issue `capability-claim` attestation type to verify declared capabilities:
+
+```json
+{
+  "subject": "<agent_public_key>",
+  "claim": "capability-claim",
+  "evidence": "vision",
+  "attestor": "<attestor_public_key>",
+  "timestamp": "<ISO8601>",
+  "signature": "<Ed25519>"
+}
+```
+
+A capability attestation means the attestor has verified (via testing or observation) that the agent actually possesses the declared capability. This turns self-declarations into verifiable trust signals.
+
+### Querying
+
+Crawlers SHOULD index capabilities to enable queries like:
+
+```
+GET /agents?capability=vision
+GET /agents?capability=audio-out,code
+```
+
 ## Cryptography
 
 - **Algorithm**: Ed25519 only. No RSA, no secp256k1, no bloat.
